@@ -3,7 +3,10 @@ from sqlalchemy.orm import DeclarativeBase, sessionmaker
 from app.config import settings
 
 # URL базы данных(подключаемся к postgresql+asyncpg, потом передаем параметры)
-DATABASE_URL = f'postgresql+asyncpg://{settings.DB_USER}:{settings.DB_PASS}@{settings.DB_HOST}:{settings.DB_PORT}/{settings.DB_NAME}'
+# DATABASE_URL = f'postgresql+asyncpg://{settings.DB_USER}:
+# {settings.DB_PASS}@{settings.DB_HOST}:{settings.DB_PORT}/{settings.DB_NAME}'
+DATABASE_URL = settings.get_database_url
+
 # Этот URL передается в движок
 
 # Создаем асинхронный движок. В движок передаем URL

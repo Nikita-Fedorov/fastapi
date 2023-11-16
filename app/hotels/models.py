@@ -1,4 +1,4 @@
-from sqlalchemy import Column, ForeignKey, Integer, JSON, String
+from sqlalchemy import Column, Integer, JSON, String
 from app.database import Base
 
 
@@ -13,8 +13,8 @@ class Hotels(Base):
     image_id = Column(Integer)
 
 
-# class Rooms(Base):
-#     __tablename__ = 'rooms'
+# class Roooms(Base):
+#     __tablename__ = 'roooms'
 
 #     id = Column(Integer, primary_key=True, nullable=False)
 #     hotel_id = Column(ForeignKey('hotels.id'), nullable=False)
