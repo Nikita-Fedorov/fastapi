@@ -10,7 +10,7 @@ from app.hotels.services import HotelServices
 router = APIRouter(prefix='/hotels', tags=['Отели'])
 
 
-@router.get('/{location}')
+@router.get('')
 async def get_hotels_by_location_and_time(
     location: str,
     date_from: date = Query(..., description=f"Например, {datetime.now().date()}"),
