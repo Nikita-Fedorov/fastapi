@@ -30,7 +30,7 @@ async def get_current_user(token: str = Depends(get_token)):
     user_id: str = payload.get('sub')
     if not user_id:
         raise UserIsNotPresent
-    user = await UsersServices.find_by_id(int(user_id))
-    if not user:
-        raise UserIsNotPresent
-    return user
+    # user = await UsersServices.find_one_or_none(user_id=)
+    # if not user:
+    #     raise UserIsNotPresent
+    # return user
