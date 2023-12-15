@@ -1,6 +1,6 @@
 from datetime import date
 from fastapi import APIRouter, Depends
-from pydantic import parse_obj_as
+from pydantic import TypeAdapter
 from app.bookings.schemas import SBooking, SBookingRoom
 from app.bookings.services import BookingService
 from app.exceptions import RoomCannotBeBooked
@@ -29,10 +29,10 @@ async def add_booking(
     user: Users = Depends(get_current_user)
 ):
     booking = await BookingService.add(user.id, room_id, date_from, date_to)
-    booking_dict = parse_obj_as(SBooking, booking).dict()
-    send_booking_confirmation_email.delay(booking_dict, user.email)
     if not booking:
         raise RoomCannotBeBooked
+    booking_dict = TypeAdapter(SBooking).validate_python(booking).model_dump()
+    send_booking_confirmation_email.delay(booking_dict, user.email)
     return booking_dict
 
 
