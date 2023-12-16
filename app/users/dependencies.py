@@ -7,7 +7,7 @@ from app.exceptions import (
     IncorrectTokenFormatExceptions, TokenAbcentException,
     TokenExpiredException, UserIsNotPresent
 )
-from app.users.services import UsersServices
+# from app.users.services import UsersServices
 
 
 def get_token(request: Request):
