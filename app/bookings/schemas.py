@@ -25,3 +25,9 @@ class SBookingRoom(SBooking):
 
     class Config:
         from_attributes = True
+
+
+class SNewBooking(SBooking):
+    room_id: int
+    date_from: date
+    date_to: date

@@ -14,6 +14,10 @@ class BaseServices():
             return result.mappings().one_or_none()
 
     @classmethod
+    async def find_by_id(cls, user_id: int):
+        return await cls.find_one_or_none(id=user_id)
+
+    @classmethod
     async def find_all(cls, **filter_by):
         async with async_session_maker() as session:
             query = select(cls.model.__table__.columns).filter_by(**filter_by)
