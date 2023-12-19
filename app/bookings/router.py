@@ -23,15 +23,10 @@ async def get_booking(
 
 @router.post('')
 async def add_booking(
-    room_id: int,
-    date_from: date,
-    date_to: date,
+    room_id: int, date_from: date, date_to: date,
     user: Users = Depends(get_current_user),
 ):
-    if user is None:
-        raise HTTPException(status_code=401, detail="User not authenticated")
-
-    booking = await BookingService.add(user, room_id, date_from, date_to)
+    booking = await BookingService.add(user.id, room_id, date_from, date_to)
     if not booking:
         raise RoomCannotBeBooked
     booking = TypeAdapter(SBooking).validate_python(booking).model_dump()

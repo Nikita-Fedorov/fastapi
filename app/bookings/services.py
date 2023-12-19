@@ -149,9 +149,6 @@ class BookingService(BaseServices):
                 .group_by(Rooms.quantity, booked_rooms.c.room_id)
             )
 
-            # Рекомендую выводить SQL запрос в консоль для сверки
-            # logger.debug(get_rooms_left.compile(engine, compile_kwargs={"literal_binds": True}))
-
             rooms_left = await session.execute(get_rooms_left)
             rooms_left: int = rooms_left.scalar()
 
@@ -168,13 +165,7 @@ class BookingService(BaseServices):
                         date_to=date_to,
                         price=price,
                     )
-                    .returning(
-                        Bookings.id,
-                        Bookings.user_id,
-                        Bookings.room_id,
-                        Bookings.date_from,
-                        Bookings.date_to,
-                    )
+                    .returning(Bookings)
                 )
 
                 new_booking = await session.execute(add_booking)
