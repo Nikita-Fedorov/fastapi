@@ -170,7 +170,7 @@ class BookingService(BaseServices):
 
                 new_booking = await session.execute(add_booking)
                 await session.commit()
-                return new_booking.mappings().one()
+                return new_booking.scalar()
             return None
 
     """
