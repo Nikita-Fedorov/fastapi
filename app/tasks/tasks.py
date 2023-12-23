@@ -7,8 +7,8 @@ from app.tasks.email_templates import create_booking_confirmation_template
 from PIL import Image
 import smtplib
 
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
+# from email.mime.text import MIMEText
+# from email.mime.multipart import MIMEMultipart
 
 
 # @celery.task
