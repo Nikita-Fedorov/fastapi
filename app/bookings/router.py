@@ -1,5 +1,5 @@
 from datetime import date
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends
 from pydantic import TypeAdapter
 from app.bookings.schemas import SBooking, SBookingRoom
 from app.bookings.services import BookingService
