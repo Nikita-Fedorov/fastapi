@@ -1,5 +1,7 @@
 from sqladmin import ModelView
 from app.bookings.models import Bookings
+from app.hotels.models import Hotels
+from app.hotels.rooms.models import Rooms
 from app.users.models import Users
 
 
@@ -14,8 +16,25 @@ class UsersAdmin(ModelView, model=Users):
 
 
 class BookingsAdmin(ModelView, model=Bookings):
-    # получаем все названия колонок
+    # получаем все названия колонок и связанного значения
     column_list = [c.name for c in Bookings.__table__.c] + [Bookings.user]
     name = 'Бронирование'
     name_plural = 'Бронирования'
+    icon = 'fa-solid fa-book'
     category = 'Бронирования'
+
+
+class HotelsAdmin(ModelView, model=Hotels):
+    column_list = [c.name for c in Hotels.__table__.c] + [Hotels.rooms]
+    name = 'Отель'
+    name_plural = 'Отели'
+    icon = 'fa-solid fa-hotel'
+    category = 'Отели'
+
+
+class RoomsAdmin(ModelView, model=Rooms):
+    column_list = [c.name for c in Rooms.__table__.c] + [Rooms.hotel, Rooms.booking]
+    name = 'Номер'
+    name_plural = 'Номера'
+    icon = 'fa-solid fa-bed'
+    category = 'Отели'
