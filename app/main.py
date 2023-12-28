@@ -4,6 +4,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from sqladmin import Admin
 from app.admin.views import BookingsAdmin, HotelsAdmin, RoomsAdmin, UsersAdmin
+from app.admin.auth import authentication_backend
 from app.database import engine
 
 from fastapi_cache import FastAPICache
@@ -54,7 +55,7 @@ app.add_middleware(
                    'Authorization'],
 )
 
-admin = Admin(app, engine)
+admin = Admin(app, engine, authentication_backend=authentication_backend)
 
 admin.add_view(UsersAdmin)
 admin.add_view(BookingsAdmin)

@@ -1,11 +1,19 @@
+from sqlalchemy import NullPool
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.orm import DeclarativeBase, sessionmaker
 from app.config import settings
 
+
+if settings.MODE == 'TEST':
+    DATABASE_URL = settings.get_test_database_url
+    DATABASE_PARAMS = {'poolclass': NullPool}
+else:
+    DATABASE_URL = settings.get_database_url
+    DATABASE_PARAMS = {}
+
 # URL базы данных(подключаемся к postgresql+asyncpg, потом передаем параметры)
 # DATABASE_URL = f'postgresql+asyncpg://{settings.DB_USER}:
 # {settings.DB_PASS}@{settings.DB_HOST}:{settings.DB_PORT}/{settings.DB_NAME}'
-DATABASE_URL = settings.get_database_url
 
 # Этот URL передается в движок
 

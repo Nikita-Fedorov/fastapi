@@ -3,6 +3,7 @@ from jose import jwt
 from passlib.context import CryptContext
 from pydantic import EmailStr
 from app.config import settings
+from app.exceptions import IncorrectEmailOrPasswordException
 
 from app.users.services import UsersServices
 
@@ -14,7 +15,7 @@ def get_password_hash(password) -> str:
     return pwd_context.hash(password)
 
 
-def verify_password(plain_password, hashed_password):
+def verify_password(plain_password, hashed_password) -> bool:
     return pwd_context.verify(plain_password, hashed_password)
 
 
@@ -28,8 +29,16 @@ def create_access_token(data: dict) -> str:
     return encoded_jwt
 
 
+# async def authenticate_user(email: EmailStr, password: str):
+#     user = await UsersServices.find_one_or_none(email=email)
+#     if not (user and not verify_password(password, user.hashed_password)):
+#         raise IncorrectEmailOrPasswordException
+#     return user
+
 async def authenticate_user(email: EmailStr, password: str):
     user = await UsersServices.find_one_or_none(email=email)
-    if not user and not verify_password(password, user.password):
-        return None
+    if not user:
+        raise IncorrectEmailOrPasswordException
+    if not verify_password(password, user.hashed_password):
+        raise IncorrectEmailOrPasswordException
     return user
